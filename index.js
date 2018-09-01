@@ -1,18 +1,21 @@
 const http = require('http');
-const Topics = require('./topics');
-
 const server = http.createServer();
+const routers = require('./routers');
 
 server.on('request', (request, response) => {
-  console.log(request.url);
-  console.log(request.method);
-
-  if (request.url === '/' && request.method === 'GET') {
-    const topics = new Topics();
-    topics.insert({name: '!!!'}, docs => {
-      console.log(docs, '?');
-    });
+  response.setHeader('Content-Type', 'application/json');
+  
+  if (request.url === '/topic' && request.method === 'POST') {
+    routers.post.insertTopic(request, response);
   }
-	response.end();
+  else if (request.url === '/topic' && request.method === 'GET') {
+    routers.get.getTopics(request, response);
+  }
+  else {
+    response.end();
+  }
 });
+
 server.listen(8443);
+
+module.exports = server;
