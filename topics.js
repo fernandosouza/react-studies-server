@@ -1,5 +1,6 @@
 const connectDB = require('./db');
 const assert = require('assert');
+const ObjectId = require('mongodb').ObjectID;
 
 class Topics {
   getAll(callback) {
@@ -26,7 +27,19 @@ class Topics {
     assert.ok(topicId)
     connectDB((db, client) => {
       const collection = db.collection('topics');
-      collection.remove({ _id: topicId }).then(callback);
+      collection.remove({ _id: ObjectId(topicId) }).then(callback);
+      client.close();
+    });
+  }
+
+  update(topicId, topicName, callback) {
+    assert.ok(topicId)
+    connectDB((db, client) => {
+      const collection = db.collection('topics');
+      collection.findOneAndUpdate(
+        { _id: ObjectId(topicId) },
+        { $set: { name: topicName } }
+      ).then(callback);
       client.close();
     });
   }

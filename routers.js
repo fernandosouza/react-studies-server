@@ -31,5 +31,14 @@ module.exports = {
         })
       })
     }
+  },
+  put: {
+    updateTopic: function (request, response) {
+      anyBody(request, response, {}, (err, body) => {
+        topics.update(body.id, body.name, data => {
+          response.end(JSON.stringify(data));
+        })
+      })
+    }
   }
 }

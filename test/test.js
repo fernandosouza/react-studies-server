@@ -57,4 +57,20 @@ describe('topics', () => {
           })
       })
   })
+
+  it('should update a topic', () => {
+    return chai.request(server)
+      .get('/topic')
+      .then(response => {
+        let elementId = response.body[0]._id;
+        return chai.request(server)
+          .put('/topic')
+          .send({ id: elementId, name: 'new name' })
+          .then(response => {
+            expect(response).to.have.status(200);
+            expect(response.body).to.have.property('ok', 1);
+            expect(response.body.value).to.have.property('_id', elementId);
+          })
+      })
+  })
 })
