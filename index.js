@@ -12,6 +12,7 @@ server.on('request', (request, response) => {
     routers.get.getTopics(request, response);
   }
   else {
+    response.writeHead(404);
     response.end();
   }
 });
