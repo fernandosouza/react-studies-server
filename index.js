@@ -11,6 +11,9 @@ server.on('request', (request, response) => {
   else if (request.url === '/topic' && request.method === 'GET') {
     routers.get.getTopics(request, response);
   }
+  else if (request.url === '/topic' && request.method === 'DELETE') {
+    routers.delete.delteTopic(request, response);
+  }
   else {
     response.writeHead(404);
     response.end();

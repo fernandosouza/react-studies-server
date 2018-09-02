@@ -22,5 +22,14 @@ module.exports = {
         response.end(JSON.stringify(data));
       })
     }
+  },
+  delete: {
+    delteTopic: function (request, response) {
+      anyBody(request, response, {}, (err, body) => {
+        topics.remove(body.id, data => {
+          response.end(JSON.stringify(data));
+        })
+      })
+    }
   }
 }

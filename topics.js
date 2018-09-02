@@ -22,7 +22,13 @@ class Topics {
     });
   }
 
-  remove() {
+  remove(topicId, callback) {
+    assert.ok(topicId)
+    connectDB((db, client) => {
+      const collection = db.collection('topics');
+      collection.remove({ _id: topicId }).then(callback);
+      client.close();
+    });
   }
 }
 
